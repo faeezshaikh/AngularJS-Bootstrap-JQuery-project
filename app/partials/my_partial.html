@@ -1,0 +1,201 @@
+<div class="container" >
+
+
+		<div id="mainLeft" class="center">
+			<div>
+				<img alt="" src="BCBS.jpg">
+				<h4>
+					<span class="label label-warning">CAEP Launch Pad: Powered by JQuery, AngularJS and Bootstrap CSS</span>
+				</h4>
+				<div id="hidden">
+					<h3>
+						<span class="label label-danger">Subscriber Id, Corp, Group and SR # are compulsory</span>
+					</h3>
+				</div>
+				<div id="hiddenEnv">
+					<h3>
+						<span class="label label-danger">You forgot to select the environment to launch</span>
+					</h3>
+				</div>
+			</div>
+			<div id="mainPanel">
+				<h1>Enter Subscriber Details:</h1>
+				<br>
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label id="SubLabel" class="col-sm-2 control-label">Subscriber Id: <span div class="redText">*</span></label>
+						<div class="col-sm-10">
+							<input type="text" id="ipSub" ng-model="s.id" placeholder="Subscriber Id">
+						</div>
+					</div>
+					<div class="form-group">
+						<label id="GroupLabel" class="col-sm-2 control-label">Group: <span div class="redText">*</span></label>
+						<div class="col-sm-10">
+							<input id="grpField" type="text" ng-model="s.grp" placeholder="Group">
+						</div>
+					</div>
+					<div class="form-group">
+						<label id="CorpLabel" class="col-sm-2 control-label">Corp Entity Code: <span div class="redText">*</span></label>
+						<div class="col-sm-10">
+							<input id="corpField" type="text" ng-model="s.corp" placeholder="Corp Entity Code">
+						</div>
+					</div>
+					<div class="form-group">
+						<label id="SrnLabel" class="col-sm-2 control-label">Sr Number: </label>
+						<div class="col-sm-10">
+							<input type="text" id="ipSrn" ng-model="s.srn" placeholder="Optional SR #">
+							<div class="myFont">If the SRN you type is present in CAEP, the subscriber entered will be ignored</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label id="OwnerLabel" class="col-sm-2 control-label">Caller:</label>
+						<div class="col-sm-10">
+							<input type="text" id="ipCaller" ng-model="s.caller" placeholder="Scarface">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label id="OwnerLabel" class="col-sm-2 control-label">Owner:</label>
+						<div class="col-sm-10">
+							<input type="text" id="ipOwner" ng-model="s.owner" placeholder="I334143">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Local:</label>
+						<div class="col-sm-10">
+							<div class="btn-group btn-toggle">
+								<button id="localOn" class="btn btn-default">ON</button>
+								<button id="localOff" class="btn btn-primary active">OFF</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Pre Dev:</label>
+						<div class="col-sm-10">
+							<div class="btn-group btn-toggle">
+								<button id="PredevOn" class="btn btn-default">ON</button>
+								<button id="PredevOff" class="btn btn-primary active">OFF</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">SIT:</label>
+						<div class="col-sm-10">
+							<div class="btn-group btn-toggle">
+								<button id="SitOn" class="btn btn-default">ON</button>
+								<button id="SitOff" class="btn btn-primary active">OFF</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">UAT:</label>
+						<div class="col-sm-10">
+							<div class="btn-group btn-toggle">
+								<button id="UatOn" class="btn btn-default">ON</button>
+								<button id="UatOff" class="btn btn-primary active">OFF</button>
+							</div>
+						</div>
+					</div>
+
+				</form>
+
+				<button id="launchButton" class="btn btn-success" ng-disabled="error || incomplete">
+					<span class="glyphicon glyphicon-send"></span> Launch CA Portal
+				</button>
+
+				<button class="btn btn-primary" ng-click="switchEnv()">
+					<span class="glyphicon glyphicon-hand-left"></span> Test REST Services
+				</button>
+
+				<button id="showDataButton" type="button" class="btn btn-info ">
+					<span class="glyphicon glyphicon-user"></span> Show Subscribers
+				</button>
+			</div>
+		</div>
+		<!--   end of mainPanel -->
+
+		<br>
+
+		<div id="demo">
+			<!-- <div id="demo" class="collapse"> -->
+			<div align="center">
+				<h2>Click on Subscriber to select</h2>
+			</div>
+
+
+			<hr>
+		<button class="blueText" ng-repeat="sub in subscribers | filter:searchFor" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0">
+				<div id="dataSub" class="panel panel-info">
+					<div class="panel-heading">
+							<label ><span class="label label-primary glyphicon glyphicon-user"> Subscriber {{sub.no}}</span> </label>
+						<div style="float: right">
+							<a ng-click="deleteSub()"><span class=" redText  glyphicon glyphicon-trash"></span></a> 
+						</div>
+					</div>
+					<div class="panel-body">
+						<table>
+							<tr>
+								<td align="left">SubId:</td>
+								<td align="right">{{sub.id}}</td>
+							</tr>
+							<tr>
+								<td align="left">Group:</td>
+								<td align="right">{{sub.grp}}</td>
+							</tr>
+							<tr>
+								<td align="left">Corp:</td>
+								<td align="right">{{sub.corp}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</button>
+			<hr>
+			
+				<div id="dataSub" class="panel panel-info">
+				<form name="add_new_sub" novalidate>
+					<div class="panel-heading">
+							<label ><span class="label label-primary glyphicon glyphicon-user"> Add Subscriber </span> </label>
+						<div style="float: right">
+							<button ng-click="addSub(new_sub)" >
+									<span class="greenColor glyphicon glyphicon-plus-sign"></span> 
+							</button>
+						</div>
+					</div>
+					
+					<div class="panel-body">
+						<table>
+							<tr>
+								<td align="left">SubId:</td>
+								<td align="right"><input type="text" ng-model="new_sub.id" /></td>
+							</tr>
+							<tr>
+								<td align="left">Group:</td>
+								<td align="right"><input type="text" ng-model="new_sub.grp"/></td>
+							</tr>
+							<tr>
+								<td align="left">Corp:</td>
+								<td align="right"><input type="text" ng-model="new_sub.corp"/></td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				</div>
+			<hr>
+
+			<div align="center">
+				<br> <span class="label label-default">Filter Subs:</span> <input type="text" ng-model="searchFor" />
+				<h4 id="freak">Service So Fast You'll Freak!</h4>
+
+			</div>
+
+		</div>
+		<!-- end of sample data -->
+
+	</div>
+	<!-- end of container -->

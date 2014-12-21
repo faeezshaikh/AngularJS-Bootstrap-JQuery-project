@@ -1,0 +1,58 @@
+div.panel {
+	width: 100%;
+	margin: 0;
+}
+
+button {
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
+div.container {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+}
+
+.center {
+	width: 100%;
+	float: right;
+}
+
+#mainLeft {
+	width: 50%;
+	float: left;
+}
+
+#demo {
+	width: 50%;
+	float: right;
+	display: none;
+}
+
+#hidden {
+	display: none;
+}
+
+#hiddenEnv {
+	display: none;
+}
+
+.blueText {
+	color: blue;
+}
+.greenColor {
+	color: green;
+	
+}
+.redText {
+	color: red;
+}
+.greyText {
+	color: #C0C0C0;
+}
+.myFont {
+    font-size:x-small;
+    color: blue;
+}
