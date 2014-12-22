@@ -56,3 +56,18 @@ div.container {
     font-size:x-small;
     color: blue;
 }
+
+img {
+  background-image: url('../ClosedTrash1.png');
+}
+
+img:hover {
+  background-image: url('../OpenTrash.png');
+}
+
+#add_form_div {
+  width: 60%;
+  margin:0 auto;
+  text-align: left;
+}
+

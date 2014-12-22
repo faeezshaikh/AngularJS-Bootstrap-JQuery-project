@@ -21,9 +21,11 @@ app.controller(
 					
 					$scope.deleteSub = function() {
 						var id = this.sub.no;
-						$('#sub_'+id).fadeOut('slow');
-						//Thread.sleep(1000);
+//						Thread.sleep(1000);
+//						$timeout(function(){var j=true;}, 3000); 
 						var i = $scope.subscribers.indexOf(this.sub);
+						console.log('i = ' + i);
+						$('#sub_'+id).fadeOut('slow');
 						if(i != -1) {
 							$scope.subscribers.splice(i, 1);
 						}
@@ -32,12 +34,20 @@ app.controller(
 					}
 					
 					$scope.addSub = function(new_sub) {
-						var last_element = $scope.subscribers[$scope.subscribers.length - 1];
-						new_sub.no = last_element.no + 1;
-						$scope.subscribers.push(new_sub);
-						localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
-						$scope.new_sub = {};
+						if( isRealValue(new_sub) ){
+							var last_element = $scope.subscribers[$scope.subscribers.length - 1];
+							new_sub.no = last_element.no + 1;
+							new_sub.srn = '';
+							console.log(new_sub.no);
+							$scope.subscribers.push(new_sub);
+							localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
+							$scope.new_sub = {};
+						}
 					}
+					
+					function isRealValue(obj){
+						 return obj && obj !== "null" && obj!== "undefined";
+						}
 					var endPoint = "<div>  <h2>REST Endpoints for Service Monitoring</h2>  <br> <p>Following are some of the endpoints:</p> <ul>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/claims?subscriberId=0000000001658640&grpNumber=000021234&corp=IL&callingApplication=ICI&fromDate=01/01/1900\" target=\"_blank\">Find Claims</a></li>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/claims/0201306050T47610X?corp=IL\" target=\"_blank\">Get Claim Details</a></li>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/members?subscriberId=000928017839&grpNumber=MB2004&corp=MT1&callingApplication=ICI&fromDate=01/01/1900\" target=\"_blank\">Get Member Information </a></li> <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/dashboard/activityCodes\" target=\"_blank\">Get Activity Codes </a></li> <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/srhistory/activities?operatorId=I259857&srNumber=1-131304901\" target=\"_blank\">Get Notes from Dashboard</a></li> </ul>    <br> <button id='chooseButton' class='btn btn-primary' ng-click='chosen()'><span class='glyphicon glyphicon-hand-left'></span>   Go Back!</button> </div>" 
 					
 							
