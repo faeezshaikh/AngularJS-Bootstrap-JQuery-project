@@ -126,15 +126,14 @@
 			<div align="center">
 				<h3>Click on Subscriber to select</h3>
 				<br> <span class="label label-default">Filter Subs:</span> <input type="text" ng-model="searchFor" />
-<!-- 				<h4 id="freak">Service So Fast You'll Freak!</h4> -->
 				
 			</div>
-			<div align="center">
-				
+			<div align="center" class="content">
+				<h3>Service So Fast You'll Freak!</h3>
 			</div>
 
 
-			<hr>
+		<hr>
 		<button class="blueText" ng-repeat="sub in subscribers | filter:searchFor  track by $index" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0">
 				<div id="dataSub" class="panel panel-info">
 					<div class="panel-heading">
@@ -166,21 +165,23 @@
 
 		<div id="add_form_div" class="panel panel-default">
 			<form name="add_new_sub" novalidate>
-				<div class="panel-heading">
+				<div align="center" class="panel-heading">
 					<h3>
 						<label><span class="label label-primary glyphicon glyphicon-plus-sign"> Add Subscriber </span> </label>
 					</h3>
 				</div>
-				<div id="addTableDiv" class="panel-body">
+				<div id="addTableDiv" align="center" class="panel-body" >
 					<table >
-							<tr>
-								<td align="left">SubId:</td>
+						
+							<tr >
+							
+								<td align="left">Sub Id:</td>
 								<td align="right">
-									<input type="number" name="subid" placeholder="Subscriber Id.."  ng-model="new_sub.id" required/>
+								<input type="number" name="subid" placeholder="Subscriber Id.."  ng-model="new_sub.id" required/>
 								</td>
 								<td>
 									<span style="color:red" ng-show="add_new_sub.subid.$dirty && add_new_sub.subid.$invalid">
-										<span ng-show="add_new_sub.subid.$error.required">Sub Id is required.</span>
+										<span ng-show="add_new_sub.subid.$error.required"> SubId is required.</span>
 									</span>
 								</td>
 							</tr>
@@ -191,7 +192,7 @@
 								</td>
 								<td>
 								<span style="color:red" ng-show="add_new_sub.grp.$dirty && add_new_sub.grp.$invalid">
-									<span ng-show="add_new_sub.grp.$error.required">Grp is required.</span>
+									<span ng-show="add_new_sub.grp.$error.required"> Grp is required.</span>
 								</span>
 								</td>
 							</tr>
@@ -202,7 +203,7 @@
 								</td>
 								<td>
 								<span style="color:red" ng-show="add_new_sub.corp.$dirty && add_new_sub.corp.$invalid">
-									<span ng-show="add_new_sub.corp.$error.required">Corp is required.</span>
+									<span ng-show="add_new_sub.corp.$error.required"> Corp is required.</span>
 								</span>
 								</td>
 							</tr>

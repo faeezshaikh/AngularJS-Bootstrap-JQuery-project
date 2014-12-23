@@ -12,7 +12,7 @@ app.controller(
 						$scope.s.srn = selectedSubscriber.srn;
 						$scope.s.owner = selectedSubscriber.owner;
 						$scope.s.caller = selectedSubscriber.caller;
-
+						$('#ipSrn').val("");
 						var id = this.sub.no;
 						$('#sub_'+id).removeClass("redText");
 						$('#sub_'+id).addClass("greyText");
@@ -214,17 +214,6 @@ app.controller(
 										$('#demo').slideToggle("slow");
 									})
 
-					/*$('.panel').click(function() {
-						$(this).addClass("panel panel-danger");
-
-					});
-					$('.panel').blur(function() {
-						alert("Handler for .blur() called.");
-						$(this).toggleClass("panel panel-danger");
-						//$(this).addClass("panel panel-danger");
-
-					});*/
-
 					$('.btn-toggle').click(function() {
 						$(this).find('.btn').toggleClass('active');
 						$(this).find('.btn').toggleClass('btn-primary');
@@ -266,10 +255,14 @@ app.controller(
 										var errorShown = false;
 
 										if (!$('#ipOwner').val()) {
-											$('#ipOwner').val('I332930')
+											$('#ipOwner').val('I334143')
 										}
 										if (!$('#ipCaller').val()) {
 											$('#ipCaller').val('Tony Montana')
+										}
+										if (!$('#ipSrn').val()) {
+											srn = 'RN-' +  new Date().getUTCMilliseconds();
+											$('#ipSrn').val(srn)
 										}
 										if (!$('#ipSub').val()) {
 											if (!errorShown)
