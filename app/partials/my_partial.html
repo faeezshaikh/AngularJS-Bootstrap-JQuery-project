@@ -134,14 +134,15 @@
 
 
 		<hr>
-		<button class="blueText" ng-repeat="sub in subscribers | filter:searchFor  track by $index" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0">
-				<div id="dataSub" class="panel panel-info">
+		<button class="blueText" ng-repeat="sub in subscribers | filter:searchFor  track by $index" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0" >
+				<div id="dataSub" class="panel panel-info" >
 					<div class="panel-heading">
 							<label ><span class="label label-primary glyphicon glyphicon-user"> Subscriber {{sub.no}}</span> </label>
-						<div style="float: right">
-							<a ng-click="deleteSub()"><span class=" redText  glyphicon glyphicon-trash"></span></a> 
+						<div  style="float: right">
+							<img  class="trashDiv" ng-click="deleteSub()"  src="ClosedTrash1.png" onmouseover="this.src='OpenTrash.png'" onmouseout="this.src='ClosedTrash1.png'" />
 						</div>
 					</div>
+					
 					<div class="panel-body">
 						<table>
 							<tr>
@@ -159,7 +160,7 @@
 						</table>
 					</div>
 				</div>
-			</button>
+					</button>
 			<hr>
 			
 

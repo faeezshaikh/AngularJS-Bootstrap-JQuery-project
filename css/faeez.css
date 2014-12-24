@@ -1,3 +1,8 @@
+img.trashDiv  {
+	width: 20px;
+    height: 20px;
+}
+
 div.panel {
 	width: 100%;
 	margin: 0;
@@ -57,13 +62,7 @@ div.container {
     color: blue;
 }
 
-img {
-  background-image: url('../ClosedTrash1.png');
-}
 
-img:hover {
-  background-image: url('../OpenTrash.png');
-}
 
 #add_form_div {
   width: 50%;
