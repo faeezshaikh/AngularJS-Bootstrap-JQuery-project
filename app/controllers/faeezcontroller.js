@@ -12,7 +12,9 @@ app.controller(
 						$scope.s.srn = selectedSubscriber.srn;
 						$scope.s.owner = selectedSubscriber.owner;
 						$scope.s.caller = selectedSubscriber.caller;
-						$('#ipSrn').val("");
+						srn = 'RN-' +  new Date().getUTCMilliseconds();
+						$('#ipSrn').val(srn)
+
 						var id = this.sub.no;
 						$('#sub_'+id).removeClass("redText");
 						$('#sub_'+id).addClass("greyText");
