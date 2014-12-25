@@ -9,10 +9,11 @@ app.controller(
 						$scope.s.id = selectedSubscriber.id;
 						$scope.s.grp = selectedSubscriber.grp;
 						$scope.s.corp = selectedSubscriber.corp;
-						$scope.s.srn = selectedSubscriber.srn;
 						$scope.s.owner = selectedSubscriber.owner;
 						$scope.s.caller = selectedSubscriber.caller;
-						srn = 'RN-' +  new Date().getUTCMilliseconds();
+						srn = generateSrn;
+//						$scope.s.srn = selectedSubscriber.srn;
+						$scope.s.srn = generateSrn;
 						$('#ipSrn').val(srn)
 
 						var id = this.sub.no;
@@ -21,13 +22,20 @@ app.controller(
 						
 					}
 					
+					function generateSrn() {
+						srn = 'SR-' +  new Date().getUTCMilliseconds()*1234;
+						return srn;
+					}
+					
 					$scope.deleteSub = function() {
 						var id = this.sub.no;
 //						Thread.sleep(1000);
 //						$timeout(function(){var j=true;}, 3000); 
 						var i = $scope.subscribers.indexOf(this.sub);
+						console.log('id = ' + id);
 						console.log('i = ' + i);
 						$('#sub_'+id).fadeOut('slow');
+						Thread.sleep(1000);
 						if(i != -1) {
 							$scope.subscribers.splice(i, 1);
 						}
@@ -35,15 +43,22 @@ app.controller(
 						localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
 					}
 					
+
+					$scope.myreset = function() {
+						$scope.add_new_sub.$setPristine();
+						$scope.new_sub = null;
+					}
 					$scope.addSub = function(new_sub) {
 						if( isRealValue(new_sub) ){
 							var last_element = $scope.subscribers[$scope.subscribers.length - 1];
 							new_sub.no = last_element.no + 1;
 							new_sub.srn = '';
-							console.log(new_sub.no);
+							console.log("New sub no = " + new_sub.no);
 							$scope.subscribers.push(new_sub);
 							localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
-							$scope.new_sub = {};
+							$scope.add_new_sub.$setPristine();
+							$scope.new_sub = null;
+							
 						}
 					}
 					
@@ -192,7 +207,6 @@ app.controller(
 					}
 
 					
-					
 	$(document)
 		.ready(
 				function() {
@@ -263,7 +277,7 @@ app.controller(
 											$('#ipCaller').val('Tony Montana')
 										}
 										if (!$('#ipSrn').val()) {
-											srn = 'RN-' +  new Date().getUTCMilliseconds();
+											srn = generateSrn;
 											$('#ipSrn').val(srn)
 										}
 										if (!$('#ipSub').val()) {
@@ -327,17 +341,31 @@ app.controller(
 										console.log('UAT URL = ' + uatUrl);
 
 										if (local)
-											window.open(localUrl);
+											OpenInNewTab(localUrl);
 										if (predev)
-											window.open(predevUrl);
+											OpenInNewTab(predevUrl);
 										if (sit)
-											window.open(sitUrl);
+											OpenInNewTab(sitUrl);
 										if (uat)
-											window.open(uatUrl);
+											OpenInNewTab(uatUrl);
 									});
 
 				})
+				
 
+										function OpenInNewTab(url) {
+											var win = window.open(url, '_blank');
+											win.focus();
+										}
+
+						function PopNewSub(id) {
+							alert("called " + id);
+							alert("Before = " + $('#sub_'+id).attr("class"));
+							$('#sub_'+id).removeClass("buzz-out");
+							$('#sub_'+id).addClass("pop");
+							alert("After = " + $('#sub_'+id).attr("class"));
+							
+						}
 				}); // end of controller
 				
 

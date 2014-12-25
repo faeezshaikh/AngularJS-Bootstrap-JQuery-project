@@ -3,7 +3,7 @@
 
 		<div id="mainLeft" class="center">
 			<div>
-				<img alt="" src="BCBS.jpg">
+				<img alt="" src="..img\BCBS.jpg">
 				<h4>
 					<span class="label label-warning">CAEP Launch Pad: Powered by JQuery, AngularJS and Bootstrap CSS</span>
 				</h4>
@@ -109,7 +109,7 @@
 				</button>
 
 				<button class="btn btn-primary" ng-click="switchEnv()">
-					<span class="glyphicon glyphicon-hand-left"></span> Test REST Services
+					<span class="glyphicon glyphicon-hand-left"></span> Test REST Endpoints
 				</button>
 
 				<button id="showDataButton" type="button" class="btn btn-info ">
@@ -134,12 +134,12 @@
 
 
 		<hr>
-		<button class="blueText pop" ng-repeat="sub in subscribers | filter:searchFor  track by $index" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0" >
+		<button class="blueText buzz-out"  ng-repeat="sub in subscribers | filter:searchFor  track by $index" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0" >
 				<div id="dataSub" class="panel panel-info" >
 					<div class="panel-heading">
 							<label ><span class="label label-primary glyphicon glyphicon-user"> Subscriber {{sub.no}}</span> </label>
 						<div  style="float: right">
-							<img  class="trashDiv" ng-click="deleteSub()"  src="ClosedTrash1.png" onmouseover="this.src='OpenTrash.png'" onmouseout="this.src='ClosedTrash1.png'" />
+							<img  class="trashDiv" ng-click="deleteSub()"  src="..\img\ClosedTrash1.png" onmouseover="this.src='..\\img\\OpenTrash.png'" onmouseout="this.src='..\\img\\ClosedTrash1.png'" />
 						</div>
 					</div>
 					
@@ -173,9 +173,7 @@
 				</div>
 				<div id="addTableDiv" align="center" class="panel-body" >
 					<table >
-						
 							<tr >
-							
 								<td align="left">Sub Id:</td>
 								<td align="right">
 								<input type="number" name="subid" placeholder="Subscriber Id.."  ng-model="new_sub.id" required/>
@@ -217,7 +215,7 @@
 						ng-disabled="add_new_sub.corp.$dirty && add_new_sub.corp.$invalid ||
  									 add_new_sub.grp.$dirty && add_new_sub.grp.$invalid || 
  									 add_new_sub.subid.$dirty && add_new_sub.subid.$invalid">Submit</button>
-						<button type="reset" class="btn btn-warning">Reset</button>
+						<button ng-click="myreset()" type="reset" class="btn btn-warning">Reset</button>
 					</p>
 				</div>
 			</form>
