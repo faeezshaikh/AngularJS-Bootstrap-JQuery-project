@@ -5,7 +5,6 @@ var app = angular.module("angularApp", ["ngRoute"]);
 			.when("/awsum",{controller:"FaeezController",templateUrl: "app/partials/my_partial.html"})
 			.when("/",{redirectTo: "/awsum"})
 			.otherwise({redirectTo: "/awsum"})
-		
 	});
 	
 	

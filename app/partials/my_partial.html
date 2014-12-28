@@ -1,168 +1,172 @@
-<div class="container" >
+<div class="container">
 
-
-		<div id="mainLeft" class="center">
-			<div>
-				<img alt="" src="..img\BCBS.jpg">
-				<h4>
-					<span class="label label-warning">CAEP Launch Pad: Powered by JQuery, AngularJS and Bootstrap CSS</span>
-				</h4>
-				<div id="hidden">
-					<h3>
-						<span class="label label-danger">Subscriber Id, Corp, Group and SR # are compulsory</span>
-					</h3>
-				</div>
-				<div id="hiddenEnv">
-					<h3>
-						<span class="label label-danger">You forgot to select the environment to launch</span>
-					</h3>
-				</div>
+	<!--   Begin of the left div -->
+	<div id="mainLeftPanel" class="center">
+		<div>
+			<img alt="" src="..img\BCBS.jpg">
+			<h4>
+				<span class="label label-warning">CAEP Launch Pad: Powered by JQuery, AngularJS and Bootstrap CSS</span>
+			</h4>
+			<div class="myHidden" id="compulsoryParams">
+				<h3>
+					<span class="label label-danger">Subscriber Id, Corp, Group and SR # are compulsory</span>
+				</h3>
 			</div>
-			<div id="mainPanel">
-				<h1>Enter Subscriber Details:</h1>
-				<br>
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label id="SubLabel" class="col-sm-2 control-label">Subscriber Id: <span div class="redText">*</span></label>
-						<div class="col-sm-10">
-							<input type="text" id="ipSub" ng-model="s.id" placeholder="Subscriber Id">
-						</div>
-					</div>
-					<div class="form-group">
-						<label id="GroupLabel" class="col-sm-2 control-label">Group: <span div class="redText">*</span></label>
-						<div class="col-sm-10">
-							<input id="grpField" type="text" ng-model="s.grp" placeholder="Group">
-						</div>
-					</div>
-					<div class="form-group">
-						<label id="CorpLabel" class="col-sm-2 control-label">Corp Entity Code: <span div class="redText">*</span></label>
-						<div class="col-sm-10">
-							<input id="corpField" type="text" ng-model="s.corp" placeholder="Corp Entity Code">
-						</div>
-					</div>
-					<div class="form-group">
-						<label id="SrnLabel" class="col-sm-2 control-label">Sr Number: </label>
-						<div class="col-sm-10">
-							<input type="text" id="ipSrn" ng-model="s.srn" placeholder="Optional SR #">
-							<div class="myFont">If the SRN you type is present in CAEP, the subscriber entered will be ignored</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label id="OwnerLabel" class="col-sm-2 control-label">Caller:</label>
-						<div class="col-sm-10">
-							<input type="text" id="ipCaller" ng-model="s.caller" placeholder="Scarface">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label id="OwnerLabel" class="col-sm-2 control-label">Owner:</label>
-						<div class="col-sm-10">
-							<input type="text" id="ipOwner" ng-model="s.owner" placeholder="I334143">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Local:</label>
-						<div class="col-sm-10">
-							<div class="btn-group btn-toggle">
-								<button id="localOn" class="btn btn-default">ON</button>
-								<button id="localOff" class="btn btn-primary active">OFF</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Pre Dev:</label>
-						<div class="col-sm-10">
-							<div class="btn-group btn-toggle">
-								<button id="PredevOn" class="btn btn-default">ON</button>
-								<button id="PredevOff" class="btn btn-primary active">OFF</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label">SIT:</label>
-						<div class="col-sm-10">
-							<div class="btn-group btn-toggle">
-								<button id="SitOn" class="btn btn-default">ON</button>
-								<button id="SitOff" class="btn btn-primary active">OFF</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label">UAT:</label>
-						<div class="col-sm-10">
-							<div class="btn-group btn-toggle">
-								<button id="UatOn" class="btn btn-default">ON</button>
-								<button id="UatOff" class="btn btn-primary active">OFF</button>
-							</div>
-						</div>
-					</div>
-
-				</form>
-
-				<button id="launchButton" class="btn btn-success" ng-disabled="error || incomplete">
-					<span class="glyphicon glyphicon-send"></span> Launch CA Portal
-				</button>
-
-				<button class="btn btn-primary" ng-click="switchEnv()">
-					<span class="glyphicon glyphicon-hand-left"></span> Test REST Endpoints
-				</button>
-
-				<button id="showDataButton" type="button" class="btn btn-info ">
-					<span class="glyphicon glyphicon-user"></span> Show Subscribers
-				</button>
+			<div class="myHidden" id="compulsoryEnv">
+				<h3>
+					<span class="label label-danger">You forgot to select the environment to launch</span>
+				</h3>
 			</div>
 		</div>
-		<!--   end of mainPanel -->
-
-		<br>
-
-		<div id="demo">
-			<!-- <div id="demo" class="collapse"> -->
-			<div align="center">
-				<h3>Click on Subscriber to select</h3>
-				<br> <span class="label label-default">Filter Subs:</span> <input type="text" ng-model="searchFor" />
-				
-			</div>
-			<div align="center" class="content">
-				<h3>Service So Fast You'll Freak!</h3>
-			</div>
-
-
-		<hr>
-		<button class="blueText buzz-out"  ng-repeat="sub in subscribers | filter:searchFor  track by $index" id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0" >
-				<div id="dataSub" class="panel panel-info" >
-					<div class="panel-heading">
-							<label ><span class="label label-primary glyphicon glyphicon-user"> Subscriber {{sub.no}}</span> </label>
-						<div  style="float: right">
-							<img  class="trashDiv" ng-click="deleteSub()"  src="..\img\ClosedTrash1.png" onmouseover="this.src='..\\img\\OpenTrash.png'" onmouseout="this.src='..\\img\\ClosedTrash1.png'" />
-						</div>
-					</div>
-					
-					<div class="panel-body">
-						<table>
-							<tr>
-								<td align="left">SubId:</td>
-								<td align="right">{{sub.id}}</td>
-							</tr>
-							<tr>
-								<td align="left">Group:</td>
-								<td align="right">{{sub.grp}}</td>
-							</tr>
-							<tr>
-								<td align="left">Corp:</td>
-								<td align="right">{{sub.corp}}</td>
-							</tr>
-						</table>
+		<div id="mainPanel">
+			<h1>Enter Subscriber Details:</h1>
+			<br>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label id="SubLabel" class="col-sm-2 control-label">Subscriber Id: <span div class="redText">*</span></label>
+					<div class="col-sm-10">
+						<input type="text" id="ipSub" ng-model="s.id" placeholder="Subscriber Id">
 					</div>
 				</div>
-					</button>
-			<hr>
+				<div class="form-group">
+					<label id="GroupLabel" class="col-sm-2 control-label">Group: <span div class="redText">*</span></label>
+					<div class="col-sm-10">
+						<input id="grpField" type="text" ng-model="s.grp" placeholder="Group">
+					</div>
+				</div>
+				<div class="form-group">
+					<label id="CorpLabel" class="col-sm-2 control-label">Corp Entity Code: <span div class="redText">*</span></label>
+					<div class="col-sm-10">
+						<input id="corpField" type="text" ng-model="s.corp" placeholder="Corp Entity Code">
+					</div>
+				</div>
+				<div class="form-group">
+					<label id="SrnLabel" class="col-sm-2 control-label">Sr Number: </label>
+					<div class="col-sm-10">
+						<input type="text" id="ipSrn" ng-model="s.srn" placeholder="Optional SR #">
+						<div class="myFont">If the SRN you type is present in CAEP, the subscriber entered will be ignored</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label id="OwnerLabel" class="col-sm-2 control-label">Caller:</label>
+					<div class="col-sm-10">
+						<input type="text" id="ipCaller" ng-model="s.caller" placeholder="Scarface">
+					</div>
+				</div>
+				<div class="form-group">
+					<label id="OwnerLabel" class="col-sm-2 control-label">Owner:</label>
+					<div class="col-sm-10">
+						<input type="text" id="ipOwner" ng-model="s.owner" placeholder="I334143">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Local:</label>
+					<div class="col-sm-10">
+						<div class="btn-group btn-toggle">
+							<button id="localOn" class="btn btn-default">ON</button>
+							<button id="localOff" class="btn btn-primary active">OFF</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Pre Dev:</label>
+					<div class="col-sm-10">
+						<div class="btn-group btn-toggle">
+							<button id="PredevOn" class="btn btn-default">ON</button>
+							<button id="PredevOff" class="btn btn-primary active">OFF</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">SIT:</label>
+					<div class="col-sm-10">
+						<div class="btn-group btn-toggle">
+							<button id="SitOn" class="btn btn-default">ON</button>
+							<button id="SitOff" class="btn btn-primary active">OFF</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">UAT:</label>
+					<div class="col-sm-10">
+						<div class="btn-group btn-toggle">
+							<button id="UatOn" class="btn btn-default">ON</button>
+							<button id="UatOff" class="btn btn-primary active">OFF</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<button id="launchButton" class="btn btn-success">
+				<span class="glyphicon glyphicon-send"></span> Launch CA Portal
+			</button>
+			<button class="btn btn-primary" ng-click="switchEnv()">
+				<span class="glyphicon glyphicon-hand-left"></span> Test REST Endpoints
+			</button>
+			<button id="showDataButton" type="button" class="btn btn-info ">
+				<span class="glyphicon glyphicon-user"></span> Show Subscribers
+			</button>
+		</div>
+	</div>
+	<!--   end of left div -->
+
+	<br>
+
+	<!-- 		Begin of the right div -->
+
+	<div id="mainRightPanel">
+		<div align="center">
+			<h3>Click on Subscriber to select</h3>
+			<br> <span class="label label-default">Filter Subs:</span> <input type="text" ng-model="searchFor" />
+		</div>
+
+		<hr>
+		
+	<!-- dir-paginate is the for the pagination plugin. Would otherwise use ng-repeat -->
+
+<!-- 		<button class="blueColor" ng-mouseover="hoverIn(sub)" ng-mouseleave="hoverOut(sub)" ng-class="{'pop' : sub.clicked, 'buzz-out' : !sub.clicked}" -->
+<!-- 				dir-paginate="sub in subscribers | itemsPerPage: 6 | filter:searchFor | orderBy : 'no' track by $index"  -->
+<!-- 				id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0"> -->
+			<button class="blueColor"  ng-mouseover="hoverIn(sub)" ng-mouseleave="hoverOut(sub)"  ng-class="{'pop' : sub.clicked, 'buzz-out' : !sub.clicked}" 
+					ng-repeat="sub in subscribers | filter:searchFor | orderBy : 'no' track by $index" 
+					id="sub_{{sub.no}}" ng-click="selectSubscriber(sub)" ng-init="count=0" >
 			
+			<div id="dataSub" class="panel panel-info">
+				<div class="panel-heading">
+					<label><span class="label label-primary glyphicon glyphicon-user"> Subscriber {{sub.no}}</span> </label>
+					<div style="float: right">
+						<img class="trashDiv" ng-click="deleteSub()" src="..\img\ClosedTrash1.png" onmouseover="this.src='..\\img\\OpenTrash.png'" onmouseout="this.src='..\\img\\ClosedTrash1.png'" />
+					</div>
+				</div>
+
+				<div class="panel-body">
+					<table>
+						<tr>
+							<td align="left">SubId:</td>
+							<td align="right">{{sub.id}}</td>
+						</tr>
+						<tr>
+							<td align="left">Group:</td>
+							<td align="right">{{sub.grp}}</td>
+						</tr>
+						<tr>
+							<td align="left">Corp:</td>
+							<td align="right">{{sub.corp}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</button>
+
+<!-- 		<div class="text-center"> -->
+<!-- 			<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="dirPagination.tpl.html"></dir-pagination-controls> -->
+<!-- 		</div> -->
+		
+		<div align="center" class="content">
+			<h3>Service So Fast You'll Freak!</h3>
+		</div>
+		<hr>
+
 
 		<div id="add_form_div" class="panel panel-default">
 			<form name="add_new_sub" novalidate>
@@ -171,68 +175,48 @@
 						<label><span class="label label-primary glyphicon glyphicon-plus-sign"> Add Subscriber </span> </label>
 					</h3>
 				</div>
-				<div id="addTableDiv" align="center" class="panel-body" >
-					<table >
-							<tr >
-								<td align="left">Sub Id:</td>
-								<td align="right">
-								<input type="number" name="subid" placeholder="Subscriber Id.."  ng-model="new_sub.id" required/>
-								</td>
-								<td>
-									<span style="color:red" ng-show="add_new_sub.subid.$dirty && add_new_sub.subid.$invalid">
-										<span ng-show="add_new_sub.subid.$error.required"> SubId is required.</span>
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<td align="left">Group:</td>
-								<td align="right">
-								<input type="number" name="grp" placeholder="Group.."  ng-model="new_sub.grp" required/>
-								</td>
-								<td>
-								<span style="color:red" ng-show="add_new_sub.grp.$dirty && add_new_sub.grp.$invalid">
-									<span ng-show="add_new_sub.grp.$error.required"> Grp is required.</span>
-								</span>
-								</td>
-							</tr>
-							<tr>
-								<td align="left">Corp:</td>
-								<td align="right">
-								<input type="text" name="corp" placeholder="Corp.." ng-model="new_sub.corp" required/>
-								</td>
-								<td>
-								<span style="color:red" ng-show="add_new_sub.corp.$dirty && add_new_sub.corp.$invalid">
-									<span ng-show="add_new_sub.corp.$error.required"> Corp is required.</span>
-								</span>
-								</td>
-							</tr>
-						</table>
-				
+				<div id="addTableDiv" align="center" class="panel-body">
+					<table>
+						<tr>
+							<td align="left">Sub Id:</td>
+							<td align="right"><input type="number" name="subid" placeholder="Subscriber Id.." ng-model="new_sub.id" required /></td>
+							<td><span style="color: red" ng-show="add_new_sub.subid.$dirty && add_new_sub.subid.$invalid && add_new_sub.subid.$error.required"> Required & must be a number.</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="left">Group:</td>
+							<td align="right"><input type="text" name="grp" placeholder="Group.." ng-model="new_sub.grp" required /></td>
+							<td><span style="color: red" ng-show="add_new_sub.grp.$dirty && add_new_sub.grp.$invalid && add_new_sub.grp.$error.required"> Grp is required.</span>
+							</td>
+						</tr>
+						<tr>
+							<td align="left">Corp:</td>
+							<td align="right"><input type="text" name="corp" placeholder="Corp.." ng-model="new_sub.corp" required /></td>
+							<td><span style="color: red" ng-show="add_new_sub.corp.$dirty && add_new_sub.corp.$invalid && add_new_sub.corp.$error.required">  Corp is required.</span>
+							</td>
+						</tr>
+					</table>
+
 					<p></p>
-					
+
 					<p>
-						<button ng-click="addSub(new_sub)" type="button" class="btn btn-success" 
-						ng-disabled="add_new_sub.corp.$dirty && add_new_sub.corp.$invalid ||
+						<button ng-click="addSub(new_sub)" type="button" class="btn btn-success"
+							ng-disabled="add_new_sub.corp.$dirty && add_new_sub.corp.$invalid ||
  									 add_new_sub.grp.$dirty && add_new_sub.grp.$invalid || 
- 									 add_new_sub.subid.$dirty && add_new_sub.subid.$invalid">Submit</button>
+ 									 add_new_sub.subid.$dirty && add_new_sub.subid.$invalid ||
+ 									 (add_new_sub.subid.$error.required ||  add_new_sub.grp.$error.required  ||  add_new_sub.corp.$error.required) ">Submit</button>
 						<button ng-click="myreset()" type="reset" class="btn btn-warning">Reset</button>
 					</p>
 				</div>
 			</form>
 		</div>
 
-		<!-- 		//// -->
-
-
-
-
-
 		<hr>
 
-		
 
-		</div>
-		<!-- end of sample data -->
 
 	</div>
-	<!-- end of container -->
+	<!-- end of right div data -->
+
+</div>
+<!-- end of container -->

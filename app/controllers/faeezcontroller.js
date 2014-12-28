@@ -9,16 +9,22 @@ app.controller(
 						$scope.s.id = selectedSubscriber.id;
 						$scope.s.grp = selectedSubscriber.grp;
 						$scope.s.corp = selectedSubscriber.corp;
-						$scope.s.owner = selectedSubscriber.owner;
-						$scope.s.caller = selectedSubscriber.caller;
+
 						srn = generateSrn;
-//						$scope.s.srn = selectedSubscriber.srn;
 						$scope.s.srn = generateSrn;
-						$('#ipSrn').val(srn)
+						$('#ipSrn').val(srn);
+						
+						owner = 'I334143';
+						$scope.s.owner = owner;
+						$('#ipOwner').val(owner);
+						
+						caller = 'Donnie Brasco';
+						$scope.s.caller = caller;
+						$('#ipCaller').val(caller);
+						
 
 						var id = this.sub.no;
-						$('#sub_'+id).removeClass("redText");
-						$('#sub_'+id).addClass("greyText");
+						$('#sub_'+id).addClass("greyText"); 
 						
 					}
 					
@@ -29,18 +35,18 @@ app.controller(
 					
 					$scope.deleteSub = function() {
 						var id = this.sub.no;
-//						Thread.sleep(1000);
-//						$timeout(function(){var j=true;}, 3000); 
 						var i = $scope.subscribers.indexOf(this.sub);
-						console.log('id = ' + id);
-						console.log('i = ' + i);
-						$('#sub_'+id).fadeOut('slow');
-						Thread.sleep(1000);
-						if(i != -1) {
-							$scope.subscribers.splice(i, 1);
-						}
-						
-						localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
+						console.log('Subscriber number to be deleted = ' + id);
+						console.log('Index of this subscriber in the array = ' + i);
+					
+						$('#sub_'+id).fadeOut( function() {
+							Thread.sleep(1000);
+							if(i != -1) {
+								$scope.subscribers.splice(i, 1);
+							// after splicing the array, update it in localStorage
+							localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
+							}
+						});
 					}
 					
 
@@ -48,30 +54,39 @@ app.controller(
 						$scope.add_new_sub.$setPristine();
 						$scope.new_sub = null;
 					}
+					
 					$scope.addSub = function(new_sub) {
 						if( isRealValue(new_sub) ){
 							var last_element = $scope.subscribers[$scope.subscribers.length - 1];
 							new_sub.no = last_element.no + 1;
 							new_sub.srn = '';
-							console.log("New sub no = " + new_sub.no);
 							$scope.subscribers.push(new_sub);
 							localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
+							new_sub.clicked = true;
 							$scope.add_new_sub.$setPristine();
 							$scope.new_sub = null;
-							
 						}
 					}
 					
+					$scope.hoverIn = function(sub){
+						sub.clicked = false;
+					};
+
+					$scope.hoverOut = function(sub){
+						//sub.clicked = false;
+					};
+					
+					// validate object is not null or undefined.
 					function isRealValue(obj){
 						 return obj && obj !== "null" && obj!== "undefined";
 						}
-					var endPoint = "<div>  <h2>REST Endpoints for Service Monitoring</h2>  <br> <p>Following are some of the endpoints:</p> <ul>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/claims?subscriberId=0000000001658640&grpNumber=000021234&corp=IL&callingApplication=ICI&fromDate=01/01/1900\" target=\"_blank\">Find Claims</a></li>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/claims/0201306050T47610X?corp=IL\" target=\"_blank\">Get Claim Details</a></li>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/members?subscriberId=000928017839&grpNumber=MB2004&corp=MT1&callingApplication=ICI&fromDate=01/01/1900\" target=\"_blank\">Get Member Information </a></li> <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/dashboard/activityCodes\" target=\"_blank\">Get Activity Codes </a></li> <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/srhistory/activities?operatorId=I259857&srNumber=1-131304901\" target=\"_blank\">Get Notes from Dashboard</a></li> </ul>    <br> <button id='chooseButton' class='btn btn-primary' ng-click='chosen()'><span class='glyphicon glyphicon-hand-left'></span>   Go Back!</button> </div>" 
 					
-							
-					var front = document.getElementById('mainPanel'), back_content = endPoint, back
-
+					
+					// You just need this function to implement flippant, plus js/flippant.min.js and css/flippant.css
 					$scope.switchEnv = function() {
-						$scope.buttonText = "Test REST services";
+						// This is the complete html for the back page
+						var endPoint = "<div>  <h2>REST Endpoints for Service Monitoring</h2>  <br> <p>Following are some of the endpoints:</p> <ul>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/claims?subscriberId=0000000001658640&grpNumber=000021234&corp=IL&callingApplication=ICI&fromDate=01/01/1900\" target=\"_blank\">Find Claims</a></li>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/claims/0201306050T47610X?corp=IL\" target=\"_blank\">Get Claim Details</a></li>   <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/members?subscriberId=000928017839&grpNumber=MB2004&corp=MT1&callingApplication=ICI&fromDate=01/01/1900\" target=\"_blank\">Get Member Information </a></li> <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/dashboard/activityCodes\" target=\"_blank\">Get Activity Codes </a></li> <li><a href=\"http://despkt5c.adhcscint.net:9082/caportal/caep/srhistory/activities?operatorId=I259857&srNumber=1-131304901\" target=\"_blank\">Get Notes from Dashboard</a></li> </ul>    <br> <button id='chooseButton' class='btn btn-primary' ng-click='chosen()'><span class='glyphicon glyphicon-hand-left'></span>   Go Back!</button> </div>" 
+						var front = document.getElementById('mainPanel'), back_content = endPoint, back
 						back = flippant.flip(front, back_content)
 						document.getElementById('chooseButton')
 								.addEventListener('click', function(e) {
@@ -86,7 +101,6 @@ app.controller(
 						owner : '',
 						caller : ''
 					};
-					$scope.buttonText = "Test REST services";
 					
 					var storedData = localStorage.getItem("list_subs");
 					if (storedData) {
@@ -98,109 +112,128 @@ app.controller(
 								id : '000848809266',
 								grp : '000099562',
 								corp : 'IL',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 2,
 								id : '000001658640',
 								grp : '000021234',
 								corp : 'IL',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 3,
 								id : '000845391798',
 								grp : '000099311',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 4,
 								id : '000800138446',
 								grp : '000091774',
 								corp : 'OK',
-								srn : ''
+								srn : '',
+								clicked: false
+									
 							}, {
 								no : 5,
 								id : '000800177375',
 								grp : '000091774',
 								corp : 'OK',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 6,
 								id : '000834844080',
 								grp : '000092682',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 7,
 								id : '000837423223',
 								grp : '000091068',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 8,
 								id : '000832753959',
 								grp : '000096975',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 9,
 								id : '000840507673',
 								grp : '00009599A',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 10,
 								id : '000840691303',
 								grp : '000091774',
 								corp : 'OK',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 11,
 								id : '000844141174',
 								grp : '000099311',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 12,
 								id : '000836305928',
 								grp : '000096975',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 13,
 								id : '000836842450',
 								grp : '000096975',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 14,
 								id : '000832753959',
 								grp : '000096975',
 								corp : 'TX',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 15,
 								id : '000928017839',
 								grp : 'MB2004',
 								corp : 'MT1',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 16,
 								id : '000928017259',
 								grp : 'MB1008',
 								corp : 'MT1',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 17,
 								id : '000928019517',
 								grp : 'MS2007',
 								corp : 'MT1',
-								srn : ''
+								srn : '',
+								clicked: false
 							}, {
 								no : 18,
 								id : '000928018081',
 								grp : 'MB2004',
 								corp : 'MT1',
-								srn : ''
+								srn : '',
+								clicked: false
 							} ];
 							
 							localStorage.setItem("list_subs",  JSON.stringify($scope.subscribers));
@@ -214,7 +247,6 @@ app.controller(
 					var predev = false;
 					var uat = false;
 					var sit = false;
-					//$("#freak").animate({fontSize:"3em"});
 
 					$('#showDataButton')
 							.click(
@@ -227,38 +259,13 @@ app.controller(
 																	: "Hide Subscribers";
 														})
 
-										$('#demo').slideToggle("slow");
+										$('#mainRightPanel').slideToggle("slow");
 									})
 
 					$('.btn-toggle').click(function() {
 						$(this).find('.btn').toggleClass('active');
 						$(this).find('.btn').toggleClass('btn-primary');
 						$(this).find('.btn').toggleClass('btn-default');
-					});
-
-					$('#localOn').click(function() {
-						local = true;
-					});
-					$('#SitOn').click(function() {
-						sit = true;
-					});
-					$('#PredevOn').click(function() {
-						predev = true;
-					});
-					$('#UatOn').click(function() {
-						uat = true;
-					});
-					$('#localOff').click(function() {
-						local = false;
-					});
-					$('#SitOff').click(function() {
-						sit = false;
-					});
-					$('#PredevOff').click(function() {
-						predev = false;
-					});
-					$('#UatOff').click(function() {
-						uat = false;
 					});
 
 					$('#launchButton')
@@ -270,11 +277,41 @@ app.controller(
 										var srn = $('#ipSrn').val();
 										var errorShown = false;
 
+										
+										var localOnClass = $('#localOn').attr('class');
+										if(localOnClass.indexOf("active") > -1) {
+											local = true;
+										} else {
+											local = false;
+										}
+										
+										var predevOnClass = $('#PredevOn').attr('class');
+										if(predevOnClass.indexOf("active") > -1) {
+											predev = true;
+										} else {
+											predev = false;
+										}
+										
+										var uatOnClass = $('#UatOn').attr('class');
+										if(uatOnClass.indexOf("active") > -1) {
+											uat = true;
+										} else {
+											uat = false;
+										}
+										
+										var sitOnClass = $('#SitOn').attr('class');
+										if(sitOnClass.indexOf("active") > -1) {
+											sit = true;
+										} else {
+											sit = false;
+										}
+										
+										
 										if (!$('#ipOwner').val()) {
 											$('#ipOwner').val('I334143')
 										}
 										if (!$('#ipCaller').val()) {
-											$('#ipCaller').val('Tony Montana')
+											$('#ipCaller').val('Donnie Brasco')
 										}
 										if (!$('#ipSrn').val()) {
 											srn = generateSrn;
@@ -303,9 +340,10 @@ app.controller(
 
 										function showError(env) {
 											if (env)
-												var element = $('#hiddenEnv');
+												var element = $('#compulsoryEnv');
 											else
-												var element = $('#hidden');
+												var element = $('#compulsoryParams');
+											
 											var timesRun = 0;
 											var interval = setInterval(
 													function() {
@@ -352,23 +390,12 @@ app.controller(
 
 				})
 				
-
 										function OpenInNewTab(url) {
 											var win = window.open(url, '_blank');
 											win.focus();
 										}
 
-						function PopNewSub(id) {
-							alert("called " + id);
-							alert("Before = " + $('#sub_'+id).attr("class"));
-							$('#sub_'+id).removeClass("buzz-out");
-							$('#sub_'+id).addClass("pop");
-							alert("After = " + $('#sub_'+id).attr("class"));
-							
-						}
 				}); // end of controller
-				
-
 				
 })();
 

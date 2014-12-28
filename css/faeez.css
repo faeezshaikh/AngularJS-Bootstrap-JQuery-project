@@ -25,26 +25,22 @@ div.container {
 	float: right;
 }
 
-#mainLeft {
+#mainLeftPanel {
 	width: 50%;
 	float: left;
 }
 
-#demo {
+#mainRightPanel {
 	width: 50%;
 	float: right;
 	display: none;
 }
 
-#hidden {
+.myHidden {
 	display: none;
 }
 
-#hiddenEnv {
-	display: none;
-}
-
-.blueText {
+.blueColor {
 	color: blue;
 }
 .greenColor {
@@ -61,8 +57,6 @@ div.container {
     font-size:x-small;
     color: blue;
 }
-
-
 
 #add_form_div {
   width: 50%;
